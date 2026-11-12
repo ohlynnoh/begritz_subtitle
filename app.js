@@ -25,6 +25,11 @@ function startVideo(){playerRequested=true;if(window.YT?.Player){initPlayer();re
 function applyTheme(theme){document.documentElement.dataset.theme=theme;const dark=theme==='dark';$('#theme-toggle').setAttribute('aria-pressed',String(dark));$('#theme-toggle span').textContent=dark?'淺色版':'深色版';$('#theme-toggle').setAttribute('aria-label',dark?'切換淺色版':'切換深色版');try{localStorage.setItem('begritz-viewer-theme',theme)}catch{}}
 $('#theme-toggle').onclick=()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');applyTheme(document.documentElement.dataset.theme||'light');$('#back-catalog').onclick=backToCatalog;$('#brand-home').onclick=backToCatalog;window.addEventListener('popstate',route);
 $('#start-video').onclick=startVideo;$('#video-search').oninput=renderLibrary;$('#video-sort').onchange=e=>{mediaSort=e.target.value;renderLibrary()};$('#clear-filters').onclick=clearFilters;
+const mobileFilterButton=$('#mobile-filter-button');
+mobileFilterButton?.addEventListener('click',()=>{
+  const open=$('#catalog-filters').classList.toggle('filters-open');
+  mobileFilterButton.setAttribute('aria-expanded',String(open));
+});
 $('#font-down').onclick=()=>{fontScale=Math.max(60,fontScale-10);updateControls()};$('#font-up').onclick=()=>{fontScale=Math.min(200,fontScale+10);updateControls()};$('#offset-minus').onclick=()=>{offset-=.25;updateControls()};$('#offset-plus').onclick=()=>{offset+=.25;updateControls()};$('#offset-reset').onclick=()=>{offset=0;updateControls()};
 $('#fullscreen').onclick=async()=>{try{if(!document.fullscreenElement)await $('#viewer').requestFullscreen();else await document.exitFullscreen()}catch{notify('此瀏覽器無法使用網頁全螢幕。')}};$('#exit-fullscreen').onclick=()=>document.exitFullscreen();
 $('#copy-link').onclick=async()=>{const shareUrl=new URL(location.href);shareUrl.searchParams.delete('embed');try{if(navigator.share)await navigator.share({title:selected.title,url:shareUrl.href});else{await navigator.clipboard.writeText(shareUrl.href);notify('已複製影片連結。')}}catch(err){if(err.name!=='AbortError')notify('請複製瀏覽器網址列中的連結。')}};

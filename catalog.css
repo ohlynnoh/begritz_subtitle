@@ -2,3 +2,11 @@ html{scrollbar-gutter:stable}.catalog-main{max-width:1240px;padding-top:40px}.ca
 
 /* Lucian #292 responsive layout container. */
 .video-grid{position:relative}
+
+.mobile-filter-button { display:none; }
+@media(max-width: 700px) {
+  .mobile-filter-button { display:inline-flex; min-height:44px; align-items:center; padding:8px 14px; margin-bottom:8px; border:1px solid currentColor; border-radius:8px; color:inherit; background:transparent; font:inherit; cursor:pointer; }
+  #catalog-filters:not(.filters-open) { display:none; }
+  .catalog-filter-row button { min-height:44px; }
+  .catalog-search input, .catalog-search select { font-size:16px; min-height:44px; }
+}
